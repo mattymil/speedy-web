@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>speedy-web-app test</title>
+
+    <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../../web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../../src/speedy-web-app/speedy-web-app.html">
+  </head>
+  <body>
+    <test-fixture id="basic">
+      <template>
+        <speedy-web-app></speedy-web-app>
+      </template>
+    </test-fixture>
+
+    <script>
+      suite('speedy-web-app', function() {
+        test('instantiating the element works', function() {
+          var element = fixture('basic');
+          assert.equal(element.is, 'speedy-web-app');
+        });
+      });
+    </script>
+  </body>
+</html>

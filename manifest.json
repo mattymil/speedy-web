@@ -1,0 +1,7 @@
+{
+  "name": "speedy-web",
+  "short_name": "speedy-web",
+  "description": "Front end for speedy-lgger data",
+  "start_url": "/",
+  "display": "standalone"
+}
