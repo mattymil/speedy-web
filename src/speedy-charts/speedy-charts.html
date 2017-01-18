@@ -1,0 +1,66 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/polymerfire/polymerfire.html">
+
+<!--
+`speedy-charts`
+Conatiner for chart components
+
+@demo demo/index.html
+-->
+
+<dom-module id="speedy-charts">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      paper-material {
+        padding: 10px;
+      }
+    </style>
+
+    <firebase-app
+      api-key="AIzaSyDKpxmykTkOS26PlbfIYXQoJAJmBSLQh0Y"
+      auth-domain="speedy-f57c3.firebaseapp.com"
+      database-url="https://speedy-f57c3.firebaseio.com"
+      app="{{app}}">
+    </firebase-app>
+
+    <firebase-query
+    path="tests"
+    data="{{testData}}"
+    >
+    </firebase-query>
+
+    <paper-material elevation="2">
+      <line-chart data="speeds"></line-chart>
+      <line-chart data="latency"></line-chart>
+    </paper-material>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'speedy-charts',
+      properties: {
+        testData: {
+          type: Array,
+        },
+        speeds: {
+          type: Array,
+          value: [],
+        },
+        latency: {
+          type: Array,
+          value: [],
+        },
+        observers: [
+          'testDataUpdated(testData.splices)',
+        ],
+        testDataUpdated: function(changeRecord) {
+          console.log('this changed: ' + changeRecord);
+        },
+      },
+    });
+  </script>
+</dom-module>

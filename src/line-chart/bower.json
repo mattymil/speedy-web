@@ -1,11 +1,9 @@
 {
-  "name": "speedy-web",
-  "description": "Front end for speedy-lgger data",
-  "main": "index.html",
+  "name": "line-chart",
+  "description": "Implements highcharts line graph.",
+  "main": "line-chart.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.4.0",
-    "app-layout": "PolymerElements/app-layout#^0.10.6",
-    "polymerfire": "firebase/polymerfire#^0.10.3"
+    "polymer": "Polymer/polymer#^1.4.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
