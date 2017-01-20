@@ -1,9 +1,11 @@
 {
-  "name": "speedy-charts",
-  "description": "Conatiner for chart components",
-  "main": "speedy-charts.html",
+  "name": "speedy-web",
+  "description": "Front end for speedy-lgger data",
+  "main": "index.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.4.0"
+    "polymer": "Polymer/polymer#^1.4.0",
+    "app-layout": "PolymerElements/app-layout#^0.10.6",
+    "highcharts-chart": "^2.0.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

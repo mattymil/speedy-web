@@ -1,6 +1,6 @@
 # \<speedy-web\>
 
-Front end for speedy-lgger data
+Front end for speedy-logger. Use this to connect to your firebase instance storing speedy logger data. It will display bandwidth and latency results. Firebase config details can be set in the ```config``` object located in ```src/speedy-charts/speedy-charts.html```
 
 ## Install the Polymer-CLI
 

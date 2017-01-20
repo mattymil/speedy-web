@@ -1,0 +1,40 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/highcharts-chart/highcharts-chart.html">
+<script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+
+
+
+</head><body><dom-module id="speedy-charts">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      paper-material {
+        padding: 10px;
+        background-color: #fff;
+      }
+      #lt {
+        margin-top: 20px;
+      }
+      #ltp {
+        margin-top: 20px;
+      }
+    </style>
+
+      <paper-material elevation="2">
+        <highcharts-chart id="bw" type="spline" label="MBPS" data="[[speeds]]" title="Bandwidth" x-zoom="" x-label="Time" y-label="MBPS" loading="" loading-message="Countdown to boom time!" vs-time="" export="">
+        </highcharts-chart>
+      </paper-material>
+
+      <paper-material id="ltp" elevation="2">
+        <highcharts-chart id="lt" type="spline" data="[[latencies]]" title="Latency" x-zoom="" x-label="Time" y-label="ms" loading="" loading-message="Countdown to boom time!" vs-time="" export="">
+        </highcharts-chart>
+      </paper-material>
+
+  </template>
+
+  <script>Polymer({is:"speedy-charts",ready:function(){var e=this,a={apiKey:"AIzaSyDKpxmykTkOS26PlbfIYXQoJAJmBSLQh0Y",authDomain:"speedy-f57c3.firebaseapp.com",databaseURL:"https://speedy-f57c3.firebaseio.com"};firebase.initializeApp(a);var s=firebase.database();s.ref("tests/").limitToLast(96).on("value",function(a){e.testDataUpdated(a)})},properties:{speeds:{type:Array},latencies:{type:Array,value:[]}},testDataUpdated:function(e){this.$.bw.loading=!0,this.$.lt.loading=!0;var a=this;this.set("speeds",[]),this.set("latencies",[]),e.forEach(function(e){var s=[Number(e.key),e.val().speeds.download],t=[Number(e.key),e.val().server.ping];a.push("speeds",s),a.push("latencies",t)}),this.$.bw.reRender(),this.$.lt.reRender(),this.$.bw.loading=!1,this.$.lt.loading=!1}});</script>
+</dom-module>
+</body></html>
