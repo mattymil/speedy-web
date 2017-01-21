@@ -1,9 +1,10 @@
 # \<speedy-web\>
 
-Front end for speedy-logger built with Polymer 1.0. Use this to connect to your firebase instance storing speedy logger data. It will display bandwidth and latency results.
+Front end for speedy-logger built with Polymer 1.0. Use this to connect to your firebase instance storing speedy logger data. It will display bandwidth and latency results. See a working demo [here](https://analytics.mattymil.com).
 
 To get going:
 - Clone the project
+- Run Bower install
 - Add Firebase config details in the ```config``` object located in ```src/speedy-charts/speedy-charts.html```
 - Perform the below Polymer setup and build steps
 - Deploy from the generated bundled or unbundled folders depending on your server config.

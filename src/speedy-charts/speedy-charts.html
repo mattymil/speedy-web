@@ -66,18 +66,17 @@ Conatiner for chart components
   <script>
     Polymer({
       is: 'speedy-charts',
-      ready: function(){
-
+      ready: function() {
         var self = this;
 
-        //database config
+        // database config
         var config = {
-          apiKey: "",
-          authDomain: "",
-          databaseURL: ""
+          apiKey: '',
+          authDomain: '',
+          databaseURL: '',
         };
 
-        //initialize firebase and get a ref to the db service
+        // initialize firebase and get a ref to the db service
         firebase.initializeApp(config);
         var db = firebase.database()
 
