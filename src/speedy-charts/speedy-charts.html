@@ -15,6 +15,10 @@ Conatiner for chart components
     <style>
       :host {
         display: block;
+        --highcharts-container{
+          background-color: #272A2F;
+          color: #fff;
+        }
       }
       paper-material {
         padding: 10px;
@@ -71,10 +75,10 @@ Conatiner for chart components
 
         // database config
         var config = {
-          apiKey: '',
-          authDomain: '',
-          databaseURL: '',
-        };
+          apiKey: 'AIzaSyDKpxmykTkOS26PlbfIYXQoJAJmBSLQh0Y',
+          authDomain: 'speedy-f57c3.firebaseapp.com',
+          databaseURL: 'https://speedy-f57c3.firebaseio.com',
+        };
 
         // initialize firebase and get a ref to the db service
         firebase.initializeApp(config);

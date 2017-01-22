@@ -9,19 +9,31 @@
         display: block;
         font-family: Arial, sans-serif;
       }
+      #logoPic{
+      margin-top: 1%;
+      }
+      #logo{
+        margin-right: 1.5%;
+
+      }
       app-header {
-        background-color: #fff;
+        height: 100px;
+        background-color: #232625;
       }
       speedy-charts {
         margin: 20px 20px 20px 20px;
+      }
+      #title{
+        color: #fff;
       }
     </style>
 
     <app-header-layout>
       <app-header fixed shadow>
-        <app-toolbar>
-          <div main-title>
-            Speedy!
+        <app-toolbar id="logoPic">
+          <img id="logo" src="../images/logo-speedy.png" alt="logo">
+          <div main-title id="title">
+            SPEEDY!
           </div>
         </app-toolbar>
       </app-header>
