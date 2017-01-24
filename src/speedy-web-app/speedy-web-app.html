@@ -6,7 +6,11 @@
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/app-layout/app-layout.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../speedy-charts/speedy-charts.html">
+<link rel="import" href="../speedy-landing/speedy-landing.html">
 
 <dom-module id="speedy-web-app">
   <template>
@@ -32,6 +36,10 @@
       }
     </style>
 
+    <app-location route="{{route}}" use-hash-as-path></app-location>
+
+    <app-route route="{{route}}" pattern="/:view" data="{{routeData}}" tail="{{tail}}"></app-route>
+
     <app-header-layout>
       <app-header fixed shadow>
         <app-toolbar id="logoPic">
@@ -39,12 +47,21 @@
             <img id="logo" src="../images/title.png" alt="speedy Title">
         </app-toolbar>
       </app-header>
-      <speedy-charts></speedy-charts>
+      <iron-pages selected="{{routeData.view}}" attr-for-selected="name">
+        <speedy-landing name="landing"></speedy-landing>
+        <speedy-charts name="charts"></speedy-charts>
+      </iron-pages>
     </app-header-layout>
-
   </template>
 
   <script>
-    Polymer({is: 'speedy-web-app'});
+    Polymer({
+      is: 'speedy-web-app',
+      ready: function() {
+        if(!this.route.path) {
+          this.set('route.path', '/landing');
+        }
+      },
+    });
   </script>
 </dom-module>
