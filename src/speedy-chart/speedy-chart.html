@@ -35,6 +35,12 @@
         chartData: {
           type: Array,
         },
+        plotColor: {
+          type: String,
+        },
+        backgroundColor: {
+          type: String,
+        },
       },
       clicker: function() {
         var self = this;
@@ -42,36 +48,48 @@
         Highcharts.chart('chart', {
         title: {
             text: self.chartTitle,
-            x: -20 //center
+            x: -20, //center
+        },
+        chart: {
+          backgroundColor: self.backgroundColor,
+          type: 'spline',
         },
         xAxis: {
-            categories: self.xAxis
+            categories: self.xAxis,
         },
         yAxis: {
             title: {
-                text: self.yAxisTitle
+                text: self.yAxisTitle,
             },
             plotLines: [{
                 value: 0,
                 width: 1,
-                color: '#808080'
-            }]
+                color: '#808080',
+            }],
         },
         tooltip: {
-            valueSuffix: self.yAxisTitle
+            valueSuffix: self.yAxisTitle,
         },
         legend: {
             layout: 'vertical',
             align: 'right',
             verticalAlign: 'middle',
-            borderWidth: 0
+            borderWidth: 0,
         },
         series: [{
             name: self.yAxisTitle,
-            data: self.chartData
-        }]
-    });
-        },
+            data: self.chartData,
+            color: self.plotColor,
+          }],
+          plotOptions: {
+            spline: {
+              marker: {
+                enabled: false,
+              },
+            },
+          },
+        });
+      },
     });
   </script>
 </dom-module>
