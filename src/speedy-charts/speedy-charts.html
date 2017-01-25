@@ -90,7 +90,7 @@ Conatiner for chart components
           snap.forEach(function(el) {
             var speed = el.val().speeds.download;
             var latency = el.val().server.ping;
-            var time = el.key;
+            var time = new Date(Number(el.key));
             self.push('speeds', speed);
             self.push('latencies', latency);
             self.push('times', time)
