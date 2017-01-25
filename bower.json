@@ -5,9 +5,9 @@
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
     "app-layout": "PolymerElements/app-layout#^0.10.6",
-    "highcharts-chart": "^2.0.0",
     "app-route": "PolymerElements/app-route",
-    "iron-pages": "PolymerElements/iron-pages#^1.0.8"
+    "iron-pages": "PolymerElements/iron-pages#^1.0.8",
+    "highcharts": "^5.0.7"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

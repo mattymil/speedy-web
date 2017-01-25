@@ -1,0 +1,76 @@
+<!-- Copyright (C) Digital Vecte - All Rights Reserved
+  Unauthorized copying of this file, via any medium is strictly prohibited
+ Proprietary and confidential
+ Written by Matthew Miller <mattymil@digitalvecte.com>, January, 2017
+ -->
+<script src="../../bower_components/highcharts/highcharts.js" ></script>
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="speedy-chart">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <button type="button" name="button" on-tap="clicker"></button>
+    <div id="chart" style="width:100%; height:400px;"></div>
+  </template>
+  <script>
+    Polymer({
+      is: 'speedy-chart',
+      properties: {
+        chartTitle: {
+          type: String,
+        },
+        xAxis: {
+          type: Array,
+        },
+        yAxisTitle: {
+          type: String,
+        },
+        xAxisTitle: {
+          type: String,
+        },
+        chartData: {
+          type: Array,
+        },
+      },
+      clicker: function() {
+        var self = this;
+        Highcharts.chart('chart', {
+        title: {
+            text: self.chartTitle,
+            x: -20 //center
+        },
+        xAxis: {
+            categories: self.xAxis
+        },
+        yAxis: {
+            title: {
+                text: self.yAxisTitle
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: self.yAxisTitle
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: self.yAxisTitle,
+            data: self.chartData
+        }]
+    });
+        },
+    });
+  </script>
+</dom-module>

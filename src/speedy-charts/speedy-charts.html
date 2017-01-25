@@ -6,7 +6,7 @@
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
-<link rel="import" href="../../bower_components/highcharts-chart/highcharts-chart.html">
+<link rel="import" href="../speedy-chart/speedy-chart.html">
 <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
 
 <!--
@@ -25,13 +25,7 @@ Conatiner for chart components
       }
       paper-material {
         background-color: #fff;
-      }
-      #bw{
-        color: #EF4136;
-      }
-      #lt {
-        margin-top: 20px;
-        color: #EF4136;
+
       }
       #ltp {
         color: #EF4136;
@@ -40,36 +34,11 @@ Conatiner for chart components
     </style>
 
       <paper-material elevation="2">
-        <highcharts-chart
-          id="bw"
-          type="spline"
-          label="MBPS"
-          data="[[speeds]]"
-          title="Bandwidth"
-          x-zoom
-          x-label="Time"
-          y-label="MBPS"
-          loading
-          loading-message="Countdown to boom time!"
-          vs-time
-          export>
-        </highcharts-chart>
+        <speedy-chart chart-title="Download" x-axis="[[times]]" y-axis-title="MBPS" x-axis-title="Time" chart-data="[[speeds]]"></speedy-chart>
       </paper-material>
 
       <paper-material id="ltp" elevation="2">
-        <highcharts-chart
-          id="lt"
-          type="spline"
-          data="[[latencies]]"
-          title="Latency"
-          x-zoom
-          x-label="Time"
-          y-label="ms"
-          loading
-          loading-message="Countdown to boom time!"
-          vs-time
-          export>
-        </highcharts-chart>
+        <speedy-chart></speedy-chart>
       </paper-material>
 
   </template>
@@ -82,20 +51,20 @@ Conatiner for chart components
 
         // database config
         var config = {
-          apiKey: 'AIzaSyDKpxmykTkOS26PlbfIYXQoJAJmBSLQh0Y',
-          authDomain: 'speedy-f57c3.firebaseapp.com',
-          databaseURL: 'https://speedy-f57c3.firebaseio.com',
-        };
+          apiKey: 'AIzaSyDKpxmykTkOS26PlbfIYXQoJAJmBSLQh0Y',
+          authDomain: 'speedy-f57c3.firebaseapp.com',
+          databaseURL: 'https://speedy-f57c3.firebaseio.com',
+        };
 
         // initialize firebase and get a ref to the db service
         firebase.initializeApp(config);
         var db = firebase.database()
 
-        //query the tests location and listen for changes. Call the testDataUpdated
-        //function to process the data
-        db.ref('tests/').limitToLast(96).on('value',function(snap){
-          self.testDataUpdated(snap)
-        })
+        // query the tests location and listen for changes. Call the testDataUpdated
+        // function to process the data
+        db.ref('tests/').limitToLast(96).on('value', function(snap) {
+          self.testDataUpdated(snap);
+        });
       },
       properties: {
         speeds: {
@@ -105,32 +74,27 @@ Conatiner for chart components
           type: Array,
           value: [],
         },
+        times: Array,
+        value: []
       },
         testDataUpdated: function(snap) {
-          // set the loading message
-          this.$.bw.loading = true;
-          this.$.lt.loading = true;
-
           // get a reference to this for use inside functions
           var self = this;
 
           // clear the arrays for new payload
           this.set('speeds', []);
           this.set('latencies', []);
+          this.set('times', [])
 
-          //iterate ove the snapshot and parse data into speeds and latencies arrays
+          // iterate ove the snapshot and parse data into speeds and latencies arrays
           snap.forEach(function(el) {
-            var speed = [Number(el.key), el.val().speeds.download];
-            var latency = [Number(el.key), el.val().server.ping]
+            var speed = el.val().speeds.download;
+            var latency = el.val().server.ping;
+            var time = el.key;
             self.push('speeds', speed);
-            self.push('latencies', latency)
+            self.push('latencies', latency);
+            self.push('times', time)
           });
-
-          //re-render the charts and clear the loading message
-          this.$.bw.reRender();
-          this.$.lt.reRender();
-          this.$.bw.loading = false;
-          this.$.lt.loading = false;
         },
     });
   </script>
