@@ -7,7 +7,9 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../speedy-chart/speedy-chart.html">
+<script src="../../bower_components/moment/min/moment.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+
 
 <!--
 `speedy-charts`
@@ -34,9 +36,11 @@ Conatiner for chart components
     </style>
 
       <paper-material elevation="2">
-        <speedy-chart chart-title="Download" x-axis="[[times]]" y-axis-title="MBPS" x-axis-title="Time" chart-data="[[speeds]]" plot-color="#EF4136" background-color="#000"></speedy-chart>
+        <speedy-chart chart-title="Download" x-axis="[[times]]" y-axis-title="MBPS" x-axis-title="Time" chart-data="[[speeds]]" plot-color="#EF4136" background-color="#000" title-style='{"color": "#fff"}' legend-style='{"color": "#ff0"}' chart-style='{"fontFamily": "Arial"}' x-axis-style='{"color": "#fff"}' y-axis-style='{"color": "#fff"}'></speedy-chart>
       </paper-material>
-
+      <paper-material elevation="2">
+        <speedy-chart id="ltp" chart-title="Latency" x-axis="[[times]]" y-axis-title="ms" x-axis-title="Time" chart-data="[[latencies]]" plot-color="#EF4136" background-color="#000" title-style='{"color": "#fff"}' legend-style='{"color": "#ff0"}' chart-style='{"fontFamily": "Arial"}' x-axis-style='{"color": "#fff"}' y-axis-style='{"color": "#fff"}'></speedy-chart>
+      </paper-material>
   </template>
 
   <script>
@@ -86,7 +90,7 @@ Conatiner for chart components
           snap.forEach(function(el) {
             var speed = el.val().speeds.download;
             var latency = el.val().server.ping;
-            var time = new Date(Number(el.key));
+            var time = moment(Number(el.key)).format('M/D/YY HH:mm');
             self.push('speeds', speed);
             self.push('latencies', latency);
             self.push('times', time)

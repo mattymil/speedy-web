@@ -13,7 +13,6 @@
         display: block;
       }
     </style>
-    <button type="button" name="button" on-tap="clicker"></button>
     <div id="chart" style="width:100%; height:400px;"></div>
   </template>
   <script>
@@ -22,74 +21,147 @@
       properties: {
         chartTitle: {
           type: String,
+          value: function() {
+            return '';
+          },
         },
         xAxis: {
           type: Array,
+          value: function() {
+            return [];
+          },
         },
         yAxisTitle: {
           type: String,
+          value: function() {
+            return '';
+          },
         },
         xAxisTitle: {
           type: String,
+          value: function() {
+            return '';
+          },
         },
         chartData: {
           type: Array,
+          value: function() {
+            return [];
+          },
         },
         plotColor: {
           type: String,
+          value: function() {
+            return '';
+          },
         },
         backgroundColor: {
           type: String,
-        },
-      },
-      clicker: function() {
-        var self = this;
-
-        Highcharts.chart('chart', {
-        title: {
-            text: self.chartTitle,
-            x: -20, //center
-        },
-        chart: {
-          backgroundColor: self.backgroundColor,
-          type: 'spline',
-        },
-        xAxis: {
-            categories: self.xAxis,
-        },
-        yAxis: {
-            title: {
-                text: self.yAxisTitle,
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080',
-            }],
-        },
-        tooltip: {
-            valueSuffix: self.yAxisTitle,
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle',
-            borderWidth: 0,
-        },
-        series: [{
-            name: self.yAxisTitle,
-            data: self.chartData,
-            color: self.plotColor,
-          }],
-          plotOptions: {
-            spline: {
-              marker: {
-                enabled: false,
-              },
-            },
+          value: function() {
+            return '';
           },
-        });
+        },
+        titleStyle: {
+          type: Object,
+          value: function() {
+            return {};
+          },
+        },
+        legendStyle: {
+          type: Object,
+          value: function() {
+            return {};
+          },
+        },
+        xAxisStyle: {
+          type: Object,
+          value: function() {
+            return {};
+          },
+        },
+        yAxisStyle: {
+          type: Object,
+          value: function() {
+            return {};
+          },
+        },
+        chartStyle: {
+          type: Object,
+          value: function() {
+            return {}
+          },
+        },
+        _chart: {
+          type: Object,
+          value: function() {
+            return {};
+          },
+        },
       },
-    });
+      observers: [
+        '_drawChart(chartData.splices)',
+      ],
+      ready: function() {
+        console.log(this.legendColor)
+      },
+      _drawChart: function() {
+        var self = this;
+        this.debounce('clicker', function() {
+          self._chart = new Highcharts.chart(this.$.chart, {
+            title: {
+              text: self.chartTitle,
+              x: -20, // center
+              style: self.titleStyle
+            },
+            chart: {
+              backgroundColor: self.backgroundColor,
+              type: 'spline',
+              style: self.chartStyle
+            },
+            xAxis: {
+                categories: self.xAxis,
+                labels: {
+                  style: self.xAxisStyle,
+                },
+            },
+            yAxis: {
+                title: {
+                    text: self.yAxisTitle,
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080',
+                }],
+                labels: {
+                  style: self.yAxisTitle,
+                }
+            },
+            tooltip: {
+                valueSuffix: self.yAxisTitle,
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0,
+                itemStyle: self.legendStyle,
+            },
+            series: [{
+                name: self.yAxisTitle,
+                data: self.chartData,
+                color: self.plotColor,
+              }],
+            plotOptions: {
+              spline: {
+                marker: {
+                  enabled: false,
+                  },
+                },
+              },
+            });
+          }, 300);
+        },
+      });
   </script>
 </dom-module>
