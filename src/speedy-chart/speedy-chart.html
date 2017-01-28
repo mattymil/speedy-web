@@ -4,7 +4,15 @@
  Written by Matthew Miller <mattymil@digitalvecte.com>, January, 2017
  -->
 <script src="../../bower_components/highcharts/highcharts.js" ></script>
+<script src="../../bower_components/highcharts/modules/exporting.js" charset="utf-8"></script>
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<!--
+`speedy-chart`
+Conatiner for line chart via High Charts
+
+@demo demo/index.html
+-->
 
 <dom-module id="speedy-chart">
   <template>
@@ -19,78 +27,166 @@
     Polymer({
       is: 'speedy-chart',
       properties: {
+
+        /* Title of the chart */
         chartTitle: {
           type: String,
           value: function() {
             return '';
           },
         },
+
+        /*
+          X axis data
+          @type:{{Array}}
+        */
         xAxis: {
           type: Array,
           value: function() {
             return [];
           },
         },
+
+        /*
+          Title of the Y-axis
+        */
         yAxisTitle: {
           type: String,
           value: function() {
             return '';
           },
         },
+
+        // Title of the X axis
         xAxisTitle: {
           type: String,
           value: function() {
             return '';
           },
         },
+
+        /*
+          Y axis data
+          @type: {{Array data points}}
+        */
         chartData: {
           type: Array,
           value: function() {
             return [];
           },
         },
+
+        // Color of the plot line i.e. "#fff"
         plotColor: {
           type: String,
           value: function() {
             return '';
           },
         },
+
+        // Background color of the chart i.e. "#fff"
         backgroundColor: {
           type: String,
           value: function() {
             return '';
           },
         },
+
+        /*
+          Style properties for the title. This is in the form of a CSS object i.e.
+          {
+          backgroundColor: "#fff"
+          }
+          @type: {{Object CSS Properties}}
+        */
         titleStyle: {
           type: Object,
           value: function() {
             return {};
           },
         },
+
+        // Stroke color of the export button. This will color the lines only
+        exportButtonStrokeColor: {
+          type: String,
+          value: function() {
+            return '';
+          },
+        },
+
+        /*
+          Style properties for the x legend elements. This is in the form of a CSS object i.e.
+          {
+          backgroundColor: "#fff"
+          }
+          @type: {{Object CSS Properties}}
+        */
         legendStyle: {
           type: Object,
           value: function() {
             return {};
           },
         },
+
+        /*
+          Style properties for the x axis labels. This is in the form of a CSS object i.e.
+          {
+          backgroundColor: "#fff"
+          }
+          @type: {{Object CSS Properties}}
+        */
         xAxisStyle: {
           type: Object,
           value: function() {
             return {};
           },
         },
+
+        /*
+          Style properties for the y axis labels. This is in the form of a CSS object i.e.
+          {
+          backgroundColor: "#fff"
+          }
+          @type: {{Object CSS Properties}}
+        */
         yAxisStyle: {
           type: Object,
           value: function() {
             return {};
           },
         },
+
+        /*
+          Style properties for the y axis title text. This is in the form of a CSS object i.e.
+          {
+          backgroundColor: "#fff"
+          }
+          @type: {{Object CSS Properties}}
+        */
+        yAxisTitleStyle: {
+          type: Object,
+          value: function() {
+            return {};
+          },
+        },
+
+        /*
+          Style properties for the chart proper. Allows setting of global properties such as font This is in the form of a CSS object i.e.
+          {
+          backgroundColor: "#fff"
+          }
+          @type: {{Object CSS Properties}}
+        */
         chartStyle: {
           type: Object,
           value: function() {
-            return {}
+            return {};
           },
         },
+        /*
+          Chart object scoped to the elements
+          @type: {{Object HighChart}}
+        */
         _chart: {
           type: Object,
           value: function() {
@@ -98,15 +194,22 @@
           },
         },
       },
+
+      // Watch for data changes
       observers: [
         '_drawChart(chartData.splices)',
       ],
-      ready: function() {
-        console.log(this.legendColor)
-      },
+
+      // Draw the chart
       _drawChart: function() {
+
         var self = this;
+
+        // use debounce to clean up multiple calls from observer
         this.debounce('clicker', function() {
+
+          // create a new chart object use polymer el selector as element argument
+          // see property explanations for those used in chart creation
           self._chart = new Highcharts.chart(this.$.chart, {
             title: {
               text: self.chartTitle,
@@ -116,7 +219,16 @@
             chart: {
               backgroundColor: self.backgroundColor,
               type: 'spline',
-              style: self.chartStyle
+              style: self.chartStyle,
+              zoomType: 'xy',
+            },
+            exporting: {
+              buttons: {
+                contextButton: {
+                  symbolStroke: self.exportButtonStrokeColor
+
+                }
+              },
             },
             xAxis: {
                 categories: self.xAxis,
@@ -127,6 +239,7 @@
             yAxis: {
                 title: {
                     text: self.yAxisTitle,
+                    style: self.yAxisTitleStyle,
                 },
                 plotLines: [{
                     value: 0,
@@ -134,7 +247,7 @@
                     color: '#808080',
                 }],
                 labels: {
-                  style: self.yAxisTitle,
+                  style: self.yAxisStyle,
                 }
             },
             tooltip: {
@@ -159,9 +272,12 @@
                   },
                 },
               },
-            });
-          }, 300);
-        },
-      });
+            credits: {
+              enabled: false
+            }
+          });
+        }, 300);
+      },
+    });
   </script>
 </dom-module>

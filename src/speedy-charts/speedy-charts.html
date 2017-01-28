@@ -36,10 +36,38 @@ Conatiner for chart components
     </style>
 
       <paper-material elevation="2">
-        <speedy-chart chart-title="Download" x-axis="[[times]]" y-axis-title="MBPS" x-axis-title="Time" chart-data="[[speeds]]" plot-color="#EF4136" background-color="#000" title-style='{"color": "#fff"}' legend-style='{"color": "#ff0"}' chart-style='{"fontFamily": "Arial"}' x-axis-style='{"color": "#fff"}' y-axis-style='{"color": "#fff"}'></speedy-chart>
+        <speedy-chart chart-title="Download"
+                      x-axis="[[times]]"
+                      y-axis-title="MBPS"
+                      x-axis-title="Time"
+                      chart-data="[[speeds]]"
+                      plot-color="#EF4136"
+                      background-color="#000"
+                      title-style='{"color": "#fff"}'
+                      legend-style='{"color": "#ff0"}'
+                      chart-style='{"fontFamily": "Arial"}'
+                      x-axis-style='{"color": "#fff"}'
+                      y-axis-style='{"color": "#fff"}'
+                      y-axis-title-style='{"color": "#fff"}'
+                      export-button-stroke-color="#000"></speedy-chart>
       </paper-material>
+
       <paper-material elevation="2">
-        <speedy-chart id="ltp" chart-title="Latency" x-axis="[[times]]" y-axis-title="ms" x-axis-title="Time" chart-data="[[latencies]]" plot-color="#EF4136" background-color="#000" title-style='{"color": "#fff"}' legend-style='{"color": "#ff0"}' chart-style='{"fontFamily": "Arial"}' x-axis-style='{"color": "#fff"}' y-axis-style='{"color": "#fff"}'></speedy-chart>
+        <speedy-chart id="ltp"
+                      chart-title="Latency"
+                      x-axis="[[times]]"
+                      y-axis-title="ms"
+                      x-axis-title="Time"
+                      chart-data="[[latencies]]"
+                      plot-color="#EF4136"
+                      background-color="#000"
+                      title-style='{"color": "#fff"}'
+                      legend-style='{"color": "#ff0"}'
+                      chart-style='{"fontFamily": "Arial"}'
+                      x-axis-style='{"color": "#fff"}'
+                      y-axis-style='{"color": "#fff"}'
+                      y-axis-title-style='{"color": "#fff"}'
+                      export-button-stroke-color="#000"></speedy-chart>
       </paper-material>
   </template>
 
