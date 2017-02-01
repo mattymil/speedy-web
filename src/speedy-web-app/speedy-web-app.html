@@ -13,6 +13,7 @@
 <link rel="import" href="../speedy-landing/speedy-landing.html">
 <link href="../../bower_components/iron-icons/iron-icons.html" rel="import">
 <link href="../../bower_components/paper-icon-button/paper-icon-button.html" rel="import">
+<link rel="import" href="../speedy-login/speedy-login.html">
 
 <dom-module id="speedy-web-app">
   <template>
@@ -68,6 +69,7 @@
       <iron-pages selected="{{routeData.view}}" attr-for-selected="name">
         <speedy-landing name="home"></speedy-landing>
         <speedy-charts name="charts"></speedy-charts>
+        <speedy-login name="login"></speedy-login>
       </iron-pages>
     </app-header-layout>
   </app-drawer-layout>

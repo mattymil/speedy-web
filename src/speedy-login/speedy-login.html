@@ -1,20 +1,48 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/paper-imput/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/image-icons.html">
 <dom-module id="speedy-login">
   <template>
     <style>
       :host {
         display: block;
       }
+      paper-input-container {
+        width: 30%;
+        min-width: 300px;
+      }
+      .formContainer {
+        margin-left: 10%;
+      }
+      .loginIcon {
+        margin-right: 7px;
+      }
     </style>
-    <paper-input label="User Name"></paper-input>
-    <paper-input label="Password"></paper-input>
+    <div class="formContainer">
+      <h1>Login</h1>
 
+      <paper-input-container float-label>
+        <iron-icon class="loginIcon" prefix icon="communication:email"></iron-icon>
+        <label>Username</label>
+        <input is="iron-input">
+      </paper-input-container>
+
+      <paper-input-container float-label>
+        <iron-icon class="loginIcon" prefix icon="image:remove-red-eye" on-tap="showPass"></iron-icon>
+        <label>Password</label>
+        <input id="password" type="password" is="iron-input">
+      </paper-input-container>
+      <p>Don't have an account? <a href="/#/register">Register</a></p>
+    </div>
 
   </template>
   <script>
     Polymer({
-      is: 'speedy-login'
+      is: 'speedy-login',
+      showPass: function() {
+        this.$.password.type = this.$.password.type == 'password' ? 'text' : 'password';
+      }
     });
   </script>
 </dom-module>
