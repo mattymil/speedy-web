@@ -1,3 +1,9 @@
+<!-- Copyright (C) Digital Vecte - All Rights Reserved
+  Unauthorized copying of this file, via any medium is strictly prohibited
+ Proprietary and confidential
+ Written by Danielle Miller <mattymil@digitalvecte.com>, January, 2017
+ -->
+
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <dom-module id="speedy-landing">
@@ -6,10 +12,30 @@
 
       :host {
         display: block;
-        background: url('../images/landingBack.jpg') no-repeat center center fixed;
       }
+      img.bg {
+        /* Stick it to the upper left hand corner */
+        position: fixed;
+        top: 0;
+        left: 0;
+        /* Make it stretch to any screen size */
+        width: 100%;
+        height: auto;
+        min-height: 100%;
+        /* set min-width to image width to maintain scale */
+        min-width: 1024px;
+        /* Make the deepest layer */
+        z-index: -999;
+      }
+        @media screen and (max-width: 1024px) { /* recenter the image on smaller screens */
+          img.bg {
+            left: 50%;
+            margin-left: -512px;   /* 50% */
+          }
+        }
     </style>
 
+  <img class="bg" src="../images/landingBack.jpg" alt="background image">
   </template>
   <script>
     Polymer({
