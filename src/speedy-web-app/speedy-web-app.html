@@ -11,6 +11,8 @@
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../speedy-charts/speedy-charts.html">
 <link rel="import" href="../speedy-landing/speedy-landing.html">
+<link href="../../bower_components/iron-icons/iron-icons.html" rel="import">
+<link href="../../bower_components/paper-icon-button/paper-icon-button.html" rel="import">
 
 <dom-module id="speedy-web-app">
   <template>
@@ -19,10 +21,10 @@
         display: block;
         font-family: Arial, sans-serif;
       }
-      #logoPic{
+      #logoPic {
       margin : 7px 0 7px 0;
       }
-      #logo{
+      #logo {
         margin-right: 1.5%;
       }
       app-header {
@@ -31,27 +33,44 @@
       speedy-charts {
         margin: 20px 20px 20px 20px;
       }
-      #title{
+      #title {
         color: #fff;
       }
+      #ham {
+        position: fixed;
+        right: 22px;
+        color: #fff;
+      }
+
     </style>
 
     <app-location route="{{route}}" use-hash-as-path></app-location>
 
     <app-route route="{{route}}" pattern="/:view" data="{{routeData}}" tail="{{tail}}"></app-route>
-
+    <app-drawer-layout force-narrow>
+      <app-drawer align="end">
+        <ul>
+          <li><a href="/#/home" drawer-toggle>Home</a></li>
+          <li><a href="/#/register" drawer-toggle>Register</a></li>
+          <li><a href="/#/login" drawer-toggle>Login</a></li>
+          <li><a href="/#/charts" drawer-toggle>Charts</a></li>
+          <li><a href="/#/configure" drawer-toggle>Configure</a></li>
+        </ul>
+      </app-drawer>
     <app-header-layout>
       <app-header fixed shadow>
         <app-toolbar id="logoPic">
           <img id="logo" src="../images/logo-speedy.png" alt="logo">
             <img id="logo" src="../images/title.png" alt="speedy Title">
+            <paper-icon-button id="ham" icon="menu" drawer-toggle></paper-icon-button>
         </app-toolbar>
       </app-header>
       <iron-pages selected="{{routeData.view}}" attr-for-selected="name">
-        <speedy-landing name="landing"></speedy-landing>
+        <speedy-landing name="home"></speedy-landing>
         <speedy-charts name="charts"></speedy-charts>
       </iron-pages>
     </app-header-layout>
+  </app-drawer-layout>
   </template>
 
   <script>
@@ -59,7 +78,7 @@
       is: 'speedy-web-app',
       ready: function() {
         if(!this.route.path) {
-          this.set('route.path', '/landing');
+          this.set('route.path', '/hom');
         }
       },
     });
