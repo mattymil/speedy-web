@@ -29,7 +29,7 @@ Conatiner for chart components
         background-color: #fff;
 
       }
-      #ltp {
+      .ltp {
         color: #EF4136;
         margin-top: 20px;
       }
@@ -40,7 +40,7 @@ Conatiner for chart components
                       x-axis="[[times]]"
                       y-axis-title="MBPS"
                       x-axis-title="Time"
-                      chart-data="[[speeds]]"
+                      chart-data="[[downloads]]"
                       plot-color="#EF4136"
                       background-color="#59554D"
                       title-style='{"color": "#fff"}'
@@ -57,8 +57,30 @@ Conatiner for chart components
                       export-button-select-stroke="#fff"></speedy-chart>
       </paper-material>
 
-      <paper-material elevation="2">
-        <speedy-chart id="ltp"
+      <paper-material class="ltp" elevation="2">
+        <speedy-chart chart-title="Upload"
+                      x-axis="[[times]]"
+                      y-axis-title="MBPS"
+                      x-axis-title="Time"
+                      chart-data="[[uploads]]"
+                      plot-color="#EF4136"
+                      background-color="#59554D"
+                      title-style='{"color": "#fff"}'
+                      legend-style='{"color": "#DFA12F"}'
+                      chart-style='{"fontFamily": "Arial"}'
+                      x-axis-style='{"color": "#fff"}'
+                      y-axis-style='{"color": "#fff"}'
+                      y-axis-title-style='{"color": "#DFA12F"}'
+                      export-button-stroke-color="#DFA12F"
+                      export-button-fill="#232625"
+                      export-button-hover-fill="#8C8A7D"
+                      export-button-hover-stroke="#DFA12F"
+                      export-button-select-fill="#fff"
+                      export-button-select-stroke="#fff"></speedy-chart>
+      </paper-material>
+
+      <paper-material class="ltp" elevation="2">
+        <speedy-chart
                       chart-title="Latency"
                       x-axis="[[times]]"
                       y-axis-title="ms"
@@ -105,8 +127,12 @@ Conatiner for chart components
         });
       },
       properties: {
-        speeds: {
+        downloads: {
           type: Array,
+        },
+        uploads: {
+          type: Array,
+          value: []
         },
         latencies: {
           type: Array,
@@ -120,16 +146,19 @@ Conatiner for chart components
           var self = this;
 
           // clear the arrays for new payload
-          this.set('speeds', []);
+          this.set('downloads', []);
+          this.set('uploads', [])
           this.set('latencies', []);
           this.set('times', [])
 
           // iterate ove the snapshot and parse data into speeds and latencies arrays
           snap.forEach(function(el) {
-            var speed = el.val().speeds.download;
+            var download = el.val().speeds.download;
+            var upload = el.val().speeds.upload;
             var latency = el.val().server.ping;
             var time = moment(Number(el.key)).format('M/D/YY HH:mm');
-            self.push('speeds', speed);
+            self.push('downloads', download);
+            self.push('uploads', upload);
             self.push('latencies', latency);
             self.push('times', time)
           });
