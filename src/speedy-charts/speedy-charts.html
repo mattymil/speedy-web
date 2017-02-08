@@ -114,7 +114,7 @@ Conatiner for chart components
 
         // query the tests location and listen for changes. Call the testDataUpdated
         // function to process the data
-        db.ref('tests/').limitToLast(24).on('value', function(snap) {
+        db.ref('tests/').limitToLast(96).on('value', function(snap) {
           self.testDataUpdated(snap);
         });
       },
@@ -163,7 +163,6 @@ Conatiner for chart components
             self.push('latencies', latency);
             self.push('times', time);
           });
-          console.log(this.uploads);
         },
     });
   </script>
