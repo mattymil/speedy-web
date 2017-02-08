@@ -2,6 +2,7 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/iron-icons/communication-icons.html">
 <link rel="import" href="../../bower_components/iron-icons/image-icons.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <dom-module id="speedy-login">
   <template>
     <style>
@@ -22,27 +23,83 @@
     <div class="formContainer">
       <h1>Login</h1>
 
+      <template is="dom-if" if="[[errMessage]]">
+        <p>[[errMessage]]</p>
+      </template>
+
       <paper-input-container float-label>
         <iron-icon class="loginIcon" prefix icon="communication:email"></iron-icon>
         <label>Username</label>
-        <input is="iron-input">
+        <input is="iron-input" bind-value="{{userName}}">
       </paper-input-container>
 
       <paper-input-container float-label>
         <iron-icon class="loginIcon" prefix icon="image:remove-red-eye" on-tap="showPass"></iron-icon>
         <label>Password</label>
-        <input id="password" type="password" is="iron-input">
+        <input id="passwd" type="password" is="iron-input" bind-value="{{pass}}">
       </paper-input-container>
+      <paper-button raised on-tap="login">Submit</paper-button>
+
       <p>Don't have an account? <a href="/#/register">Register</a></p>
+      <button type="button" name="button" on-tap="signOut">Sign Out</button>
     </div>
 
   </template>
   <script>
     Polymer({
       is: 'speedy-login',
+      properties: {
+        firebase: {
+          type: Object,
+          value: {},
+        },
+        userName: {
+          type: String,
+          value: ''
+        },
+        pass: {
+          type: String,
+          value: '',
+        },
+        errMessage: {
+          type: String,
+          value: '',
+        },
+      },
       showPass: function() {
-        this.$.password.type = this.$.password.type == 'password' ? 'text' : 'password';
-      }
+        this.$.passwd.type = this.$.passwd.type == 'password' ? 'text' : 'password';
+      },
+      login: function() {
+        let self = this;
+
+        this.firebase.auth().signInWithEmailAndPassword(this.userName, this.pass).then(function(){
+          // if there is a previous error message, clear it on successful login
+          if(errMessage){
+            self.set('errMessage', "")
+          }
+        }).catch(function(err) {
+
+          self.set('errMessage', "")
+
+          switch(err.code) {
+            case 'auth/invalid-email':
+              self.set('errMessage', 'Invalid Email Address, must be xxx@xxxx.xxx');
+              break;
+            case 'auth/user-disabled':
+              self.set('errMessage', 'User account has been disabled');
+              break;
+            case 'auth/user-not-found':
+              self.set('errMessage', 'User cannot be found');
+              break;
+            case 'auth/wrong-password':
+              self.set('errMessage', 'Incorrect password');
+              break;
+          }
+        });
+      },
+      signOut: function() {
+        this.firebase.auth().signOut();
+      },
     });
   </script>
 </dom-module>

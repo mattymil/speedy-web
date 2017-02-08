@@ -106,27 +106,23 @@ Conatiner for chart components
   <script>
     Polymer({
       is: 'speedy-charts',
-      ready: function() {
+      attached: function() {
         var self = this;
 
-        // database config
-        var config = {
-          apiKey: 'AIzaSyDKpxmykTkOS26PlbfIYXQoJAJmBSLQh0Y',
-          authDomain: 'speedy-f57c3.firebaseapp.com',
-          databaseURL: 'https://speedy-f57c3.firebaseio.com',
-        };
-
-        // initialize firebase and get a ref to the db service
-        firebase.initializeApp(config);
-        var db = firebase.database()
+        // get a reference to the db
+        var db = this.firebase.database()
 
         // query the tests location and listen for changes. Call the testDataUpdated
         // function to process the data
-        db.ref('tests/').limitToLast(96).on('value', function(snap) {
+        db.ref('tests/').limitToLast(24).on('value', function(snap) {
           self.testDataUpdated(snap);
         });
       },
       properties: {
+        firebase: {
+          type: Object,
+          value: {}
+        },
         downloads: {
           type: Array,
         },
@@ -151,7 +147,7 @@ Conatiner for chart components
           this.set('latencies', []);
           this.set('times', [])
 
-          // iterate ove the snapshot and parse data into speeds and latencies arrays
+          // iterate over the snapshot and parse data into speeds and latencies arrays
           snap.forEach(function(el) {
             var download = el.val().speeds.download;
             var upload = el.val().speeds.upload;
@@ -160,8 +156,9 @@ Conatiner for chart components
             self.push('downloads', download);
             self.push('uploads', upload);
             self.push('latencies', latency);
-            self.push('times', time)
+            self.push('times', time);
           });
+          console.log(this.uploads);
         },
     });
   </script>
