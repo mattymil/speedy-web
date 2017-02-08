@@ -150,7 +150,12 @@ Conatiner for chart components
           // iterate over the snapshot and parse data into speeds and latencies arrays
           snap.forEach(function(el) {
             var download = el.val().speeds.download;
-            var upload = el.val().speeds.upload;
+
+            // temporary patch to account for some undefined values in upload data
+            //TODO remove this patch when undefined values are flushed.
+
+            var upload = el.val().speeds.upload ? el.val().speeds.upload : 0;
+
             var latency = el.val().server.ping;
             var time = moment(Number(el.key)).format('M/D/YY HH:mm');
             self.push('downloads', download);
