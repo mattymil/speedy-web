@@ -9,6 +9,9 @@
 <link rel="import" href="../../bower_components/app-route/app-route.html">
 <link rel="import" href="../../bower_components/app-route/app-location.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../speedy-charts/speedy-charts.html">
 <link rel="import" href="../speedy-landing/speedy-landing.html">
 <link href="../../bower_components/iron-icons/iron-icons.html" rel="import">
@@ -23,6 +26,16 @@
       :host {
         display: block;
         font-family: Arial, sans-serif;
+      }
+      .drawerLink {
+        text-decoration: none;
+        color: black;
+      }
+      .drawerLink:focus {
+        outline: none;
+      }
+      .iron-selected paper-item{
+        color: red;
       }
       #logoPic {
       margin : 7px 0 7px 0;
@@ -52,13 +65,23 @@
     <app-route route="{{route}}" pattern="/:view" data="{{routeData}}" tail="{{tail}}"></app-route>
     <app-drawer-layout force-narrow>
       <app-drawer align="end">
-        <ul>
-          <li><a href="/#/home" drawer-toggle>Home</a></li>
-          <li><a href="/#/register" drawer-toggle>Register</a></li>
-          <li><a href="/#/login" drawer-toggle>Login</a></li>
-          <li><a href="/#/charts" drawer-toggle>Charts</a></li>
-          <li><a href="/#/configure" drawer-toggle>Configure</a></li>
-        </ul>
+        <iron-selector selected="0" class="drawerSelector">
+          <a class="drawerLink" href="/#/home">
+            <paper-item drawer-toggle>Home</paper-item>
+          </a>
+          <a class="drawerLink" href="/#/register">
+            <paper-item drawer-toggle>Register</paper-item>
+          </a>
+          <a class="drawerLink" href="/#/login">
+            <paper-item drawer-toggle>Login</paper-item>
+          </a>
+          <a class="drawerLink" href="/#/charts">
+            <paper-item drawer-toggle>Charts</paper-item>
+          </a>
+          <a class="drawerLink" href="/#/configuration">
+            <paper-item drawer-toggle>Settings</paper-item>
+          </a>
+        </iron-selector>
       </app-drawer>
     <app-header-layout>
       <app-header fixed shadow>
@@ -101,15 +124,14 @@
         'challengeRoute(route.path)'
       ],
       challengeRoute: function() {
-        /*
-          if(!this.route.path) {
-            this.set('route.path', '/home');
-          }
-          else if(this.route.path == '/charts' && !this.fbase.auth().currentUser) {
-            this.set('route.path', '/login')
-          }
-          */
-      }
+          if(this.route.path == '/' || !this.route.path) {
+            this.set('route.path', '/home')
+        }
+        // if firebase has been initialized
+        if(this.fbase) {
+          
+        }
+      },
     });
   </script>
 </dom-module>
